@@ -9,7 +9,13 @@ import { getCoins } from '../reducers/coins'
 
 class CoinList extends React.Component {
   componentDidMount() {
-    this.props.dispatch(getCoins())
+    const { dispatch } = this.props
+    dispatch(getCoins())
+    this.interval = setInterval( () => dispatch(getCoins()), 60000 )
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   headers = () => {
@@ -59,4 +65,10 @@ const mapStateToProps = (state) => {
   return { coins: state.coins }
 }
 
+
 export default connect(mapStateToProps)(CoinList)
+
+
+
+
+
